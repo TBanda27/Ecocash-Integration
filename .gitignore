@@ -1,0 +1,22 @@
+*.env
+.idea
+*.html
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.claude/
+target/
+build/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
