@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 @EnableConfigurationProperties(EcocashProperties.class)
-public class EcocashConfig {
+public class    EcocashConfig {
 
     @Bean
     public WebClient ecocashWebClient(EcocashProperties properties) {
