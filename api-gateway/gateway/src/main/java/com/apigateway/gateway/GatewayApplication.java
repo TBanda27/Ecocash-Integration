@@ -1,4 +1,4 @@
-package com.ecocashpayment.ecocash;
+package com.apigateway.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class EcocashApplication {
+public class GatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EcocashApplication.class, args);
+		SpringApplication.run(GatewayApplication.class, args);
 	}
 
 }
