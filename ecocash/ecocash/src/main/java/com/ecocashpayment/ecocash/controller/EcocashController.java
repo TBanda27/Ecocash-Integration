@@ -6,31 +6,29 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class EcocashController {
 
     private final EcocashService ecocashService;
 
     @PostMapping("/payments")
-    public Mono<ResponseEntity<PaymentResponse>> initiatePayment(@Valid @RequestBody PaymentRequest request) {
-        return ecocashService.initiatePayment(request)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<PaymentResponse> initiatePayment(@Valid @RequestBody PaymentRequest request) {
+        PaymentResponse response = ecocashService.initiatePayment(request);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/refunds")
-    public Mono<ResponseEntity<RefundResponse>> initiateRefund(@Valid @RequestBody RefundRequest request) {
-        return ecocashService.initiateRefund(request)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<RefundResponse> initiateRefund(@Valid @RequestBody RefundRequest request) {
+        RefundResponse response = ecocashService.initiateRefund(request);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/transactions/lookup")
-    public Mono<ResponseEntity<TransactionLookupResponse>> lookupTransaction(
-            @Valid @RequestBody TransactionLookupRequest request) {
-        return ecocashService.lookupTransaction(request)
-                .map(ResponseEntity::ok);
+    public ResponseEntity<TransactionLookupResponse> lookupTransaction(@Valid @RequestBody TransactionLookupRequest request) {
+        TransactionLookupResponse response = ecocashService.lookupTransaction(request);
+        return ResponseEntity.ok(response);
     }
 }

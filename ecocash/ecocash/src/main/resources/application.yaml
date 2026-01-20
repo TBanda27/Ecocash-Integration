@@ -11,9 +11,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 ecocash:
-  base-url: https://developers.ecocash.co.zw/api/ecocash_pay
+  base-url: ${ECOCASH_BASE_URL}
   api:
     key: ${ECOCASH_API_KEY}
-  status: ${ECOCASH_STATUS:sandbox}
+  status: ${ECOCASH_SANDBOX}
   callback:
     url: ${ECOCASH_CALLBACK_URL}

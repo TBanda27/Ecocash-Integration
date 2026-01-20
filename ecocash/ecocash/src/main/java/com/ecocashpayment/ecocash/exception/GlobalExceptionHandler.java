@@ -4,10 +4,9 @@ import com.ecocashpayment.ecocash.dto.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.bind.support.WebExchangeBindException;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.List;
 
@@ -15,8 +14,8 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(WebExchangeBindException.class)
-    public ResponseEntity<ErrorResponse> handleValidationException(WebExchangeBindException ex) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
@@ -35,30 +34,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
-    @ExceptionHandler(WebClientResponseException.class)
-    public ResponseEntity<ErrorResponse> handleWebClientException(WebClientResponseException ex) {
-        log.error("EcoCash API error - Status: {}, Body: {}",
-                ex.getStatusCode(), ex.getResponseBodyAsString());
-
-        String message = switch (ex.getStatusCode().value()) {
-            case 400 -> "Invalid request to EcoCash API";
-            case 401 -> "Invalid API key";
-            case 403 -> "API key doesn't have required permissions";
-            case 404 -> "Resource not found";
-            case 429 -> "Too many requests - please retry later";
-            case 500, 502, 503 -> "EcoCash service temporarily unavailable";
-            default -> "EcoCash API error";
-        };
-
-        ErrorResponse response = new ErrorResponse(
-                ex.getStatusCode().value(),
-                "EcoCash API Error",
-                message
-        );
-
-        return ResponseEntity.status(ex.getStatusCode()).body(response);
-    }
-
     @ExceptionHandler(EcocashApiException.class)
     public ResponseEntity<ErrorResponse> handleEcocashApiException(EcocashApiException ex) {
         log.error("EcoCash API exception: {}", ex.getMessage());
@@ -67,10 +42,20 @@ public class GlobalExceptionHandler {
                 ? HttpStatus.valueOf(ex.getStatusCode().value())
                 : HttpStatus.INTERNAL_SERVER_ERROR;
 
+        String message = switch (status.value()) {
+            case 400 -> "Invalid request to EcoCash API";
+            case 401 -> "Invalid API key";
+            case 403 -> "API key doesn't have required permissions";
+            case 404 -> "Resource not found";
+            case 429 -> "Too many requests - please retry later";
+            case 500, 502, 503 -> "EcoCash service temporarily unavailable";
+            default -> ex.getMessage();
+        };
+
         ErrorResponse response = new ErrorResponse(
                 status.value(),
-                "EcoCash Error",
-                ex.getMessage()
+                "EcoCash API Error",
+                message
         );
 
         return ResponseEntity.status(status).body(response);
