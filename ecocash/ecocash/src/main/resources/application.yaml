@@ -13,5 +13,4 @@ eureka:
 ecocash:
   base-url: ${ECOCASH_BASE_URL}
   api-key: ${ECOCASH_API_KEY}
-  status: ${ECOCASH_SANDBOX}
-  callback-url: ${ECOCASH_CALLBACK_URL}
+  status: ${ECOCASH_STATUS}

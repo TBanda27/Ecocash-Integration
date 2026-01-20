@@ -6,8 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record EcocashProperties(
         String baseUrl,
         String apiKey,
-        String status,
-        String callbackUrl
+        String status
 ) {
     public String getPaymentEndpoint() {
         return baseUrl + "/api/v2/payment/instant/c2b/" + status;
