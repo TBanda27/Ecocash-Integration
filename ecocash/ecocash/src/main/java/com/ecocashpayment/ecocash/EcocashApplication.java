@@ -16,7 +16,7 @@ public class EcocashApplication {
 		Dotenv dotenv = Dotenv.configure()
 				.directory("./")  // Look in current directory
 				.ignoreIfMissing()
-				.load();
+			.load();
 
 		dotenv.entries().forEach(entry -> {
 			System.setProperty(entry.getKey(), entry.getValue());

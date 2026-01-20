@@ -41,7 +41,7 @@ public class EcocashService {
             Request request = new Request.Builder()
                     .url(url)
                     .method("POST", body)
-                    .addHeader("X-API-KEY", ecocashProperties.api().key())
+                    .addHeader("X-API-KEY", ecocashProperties.apiKey())
                     .addHeader("Content-Type", "application/json")
                     .build();
 
@@ -84,7 +84,7 @@ public class EcocashService {
             Request request = new Request.Builder()
                     .url(url)
                     .method("POST", body)
-                    .addHeader("X-API-KEY", ecocashProperties.api().key())
+                    .addHeader("X-API-KEY", ecocashProperties.apiKey())
                     .addHeader("Content-Type", "application/json")
                     .build();
 
@@ -138,7 +138,7 @@ public class EcocashService {
             Request request = new Request.Builder()
                     .url(url)
                     .method("POST", body)
-                    .addHeader("X-API-KEY", ecocashProperties.api().key())
+                    .addHeader("X-API-KEY", ecocashProperties.apiKey())
                     .addHeader("Content-Type", "application/json")
                     .build();
 
